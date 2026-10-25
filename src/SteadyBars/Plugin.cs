@@ -40,6 +40,9 @@ internal static class SideBars
     // leaves 4 between frames.
     private const float Gap = 12f;
 
+    // Skill icons carry transparent margins the valknut has not; scaled up they match its size.
+    private const float IconScale = 1.2f;
+
     private static Hud _hud;
     private static Bar _stamina, _eitr;
 
@@ -61,7 +64,7 @@ internal static class SideBars
         int slot = 0;
         if (Plugin.ShowStamina.Value)
             _stamina = new Bar(hud, ++slot, "SteadyBars_Stamina", hud.m_staminaBar2Fast, hud.m_staminaBar2Slow,
-                Skills.SkillType.Run);
+                Skills.SkillType.Run, outline: true);
         if (Plugin.ShowEitr.Value)
             _eitr = new Bar(hud, ++slot, "SteadyBars_Eitr", hud.m_eitrBarFast, hud.m_eitrBarSlow,
                 Skills.SkillType.ElementalMagic);
@@ -87,7 +90,8 @@ internal static class SideBars
         /// A copy of the health bar <paramref name="slot"/> bar-widths to its right, with the colours and fill
         /// animation of the game's own bar, and a copy of the health icon under it showing the icon of <paramref name="skill"/>.
         /// </summary>
-        public Bar(Hud hud, int slot, string name, GuiBar matchFast, GuiBar matchSlow, Skills.SkillType skill)
+        public Bar(Hud hud, int slot, string name, GuiBar matchFast, GuiBar matchSlow, Skills.SkillType skill,
+            bool outline = false)
         {
             RectTransform health = hud.m_healthBarRoot;
             GameObject copy = Object.Instantiate(health.gameObject, health.parent, false);
@@ -106,6 +110,14 @@ internal static class SideBars
                 _icon = icon.GetComponent<Image>();
                 _icon.color = Color.white; // The health icon is dimmed; skill icons keep their own colours.
                 _icon.sprite = null;
+                icon.sizeDelta *= IconScale;
+                if (outline)
+                {
+                    // The Run icon is dark brown and gets lost on dark ground without a light edge.
+                    Outline edge = icon.gameObject.AddComponent<Outline>();
+                    edge.effectColor = new Color(1f, 1f, 1f, 0.5f);
+                    edge.effectDistance = new Vector2(1.5f, -1.5f);
+                }
             }
 
             // The copy keeps the health bar's layout: its fast and slow GuiBars sit in the same places.
