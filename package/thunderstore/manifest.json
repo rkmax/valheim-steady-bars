@@ -1,0 +1,9 @@
+{
+  "name": "SteadyBars",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/rkmax/valheim-steady-bars",
+  "description": "Stamina and eitr bars next to the health bar, in the same style, always on screen.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2351"
+  ]
+}

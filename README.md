@@ -34,15 +34,12 @@ Any other mod that puts something right of the health bar needs the same move.
 
 ## Install
 
-You need [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/). Only in your game, nothing on the server.
+You need [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/). If you already play with mods from r2modman or Thunderstore Mod Manager you have it. Only in your game, nothing on the server.
 
-Build and copy the DLL to your game:
+Download `SteadyBars-<version>.zip` from [Releases](../../releases), then:
 
-```sh
-dotnet build src/SteadyBars -c Release -p:Deploy=true
-```
-
-It copies `SteadyBars.dll` to `BepInEx/plugins` of the default Steam install, pass `-p:ValheimDir=...` for other path.
+- **r2modman / Thunderstore Mod Manager:** Settings > Import local mod, pick the zip.
+- **Manual:** copy `plugins/SteadyBars.dll` from the zip into `BepInEx/plugins` of your Valheim folder.
 
 ## Configuration
 
@@ -50,3 +47,26 @@ File: `BepInEx/config/rkmax.steadybars.cfg`. Changes apply next time you log in.
 
 - `ShowStamina` (true): adds the stamina bar.
 - `ShowEitr` (true): adds the eitr bar.
+
+## Development
+
+Build and copy the DLL to your game (close the game first):
+
+```sh
+dotnet build src/SteadyBars -c Release -p:Deploy=true
+```
+
+It copies `SteadyBars.dll` to `BepInEx/plugins` of the default Steam install, pass `-p:ValheimDir=...` for other path.
+
+### Release
+
+Releases are built local because the build needs Valheim's assemblies. The version is `Version` in `src/SteadyBars/Plugin.cs`. Bump it, add a `CHANGELOG.md` entry, then:
+
+```sh
+./scripts/package.sh                      # -> dist/SteadyBars-<version>.zip
+gh release create v<version> dist/SteadyBars-<version>.zip --generate-notes
+```
+
+## License
+
+[MIT](LICENSE)
