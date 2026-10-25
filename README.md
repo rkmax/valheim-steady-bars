@@ -4,7 +4,7 @@ Valheim mod that adds stamina and eitr bars next to the health bar, in the same 
 
 | Before | After |
 |---|---|
-| ![Before](docs/before.png) | (screenshot coming) |
+| ![Before](docs/before.png) | ![After](docs/after.png) |
 
 - Stamina goes right of the health bar, eitr after it. Each bar grows with your max like the health bar does, and the number is your current value.
 - Under each bar there is an icon like the health one: the Run skill icon for stamina and the Elemental Magic one for eitr.
@@ -13,7 +13,14 @@ Valheim mod that adds stamina and eitr bars next to the health bar, in the same 
 
 ## Using ExtraSlots?
 
-ExtraSlots puts its quick slots right of the health bar, so the new bars overlap them. Move them right by 88 in `BepInEx/config/shudnal.ExtraSlots.cfg`. It's the `Offset` of the ammo, quick and food slots, all three at `x` 230 by default:
+ExtraSlots puts its quick slots right of the health bar, so the new bars overlap them. Move them right in `BepInEx/config/shudnal.ExtraSlots.cfg`, it's the `x` in the `Offset` of the ammo, quick and food slots (230 by default). How much depends on how many bars you have on:
+
+| Bars on | Move right | `x` |
+|---|---|---|
+| Both (default) | 88 | 318 |
+| Only one (`ShowStamina` or `ShowEitr` false) | 44 | 274 |
+
+With both bars on:
 
 ```ini
 Offset = {"x":318.0,"y":228.0}   # ammo slots
@@ -21,7 +28,9 @@ Offset = {"x":318.0,"y":156.0}   # quick slots
 Offset = {"x":318.0,"y":84.0}    # food slots
 ```
 
-Any other mod that puts something right of the health bar needs the same 88. With one of the bars turned off it's 44.
+It counts the bars turned on in the config. The eitr bar keeps its space even when it's hidden because you have no eitr.
+
+Any other mod that puts something right of the health bar needs the same move.
 
 ## Install
 
